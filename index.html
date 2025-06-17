@@ -426,9 +426,9 @@
 
         #treatment-text {
             background-color: #eef9f5;
-            padding: 10px;
-            border-radius: 4px;
-            margin-top: 1px;
+            padding: 0px;
+            border-radius: 0px;
+            margin-top: 0px;
         }
 
         .highlight-background {
@@ -733,12 +733,15 @@
             <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="15000">60分コース</button>
             <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="15000">90分コース</button>
             <button type="button" onclick="selectSymptom(this, 'treatment3')" data-price="15000">120分コース</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="15000">150分コース</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="15000">新人モニターコース 90分</button>
         </div>
         <div class="highlight-background">
             <span class="highlight-text">オプション</span>
         </div>
         <div class="irradiations">
-            <button type="button" id="firstirradiations" onclick="selectirradiations(this)" data-price="1500">ヘッドスパ</button>
+            <button type="button" id="firstirradiations" onclick="selectirradiations(this)" data-price="1500">耳かき 10分</button>
+            <button type="button" id="firstirradiations" onclick="selectirradiations(this)" data-price="1500">ヘッドスパ 10分</button>
         </div>
 
         <div class="label">希望日時<span class="required">必須</span></div>
@@ -807,7 +810,7 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             liff.init({
-                liffId: '2007528245-bv1YGArK'
+                liffId: '2007587841-pMlNMnWr'
             }).then(() => {
                 console.log('LIFF初期化成功');
             }).catch((err) => {
@@ -827,15 +830,18 @@
 
         // 訪問回数ごとの時間設定 (例：初めて=20分、2回目以降=15分)
         let irradiationsTimes = {
-            'ヘッドスパ': 30
+            'ヘッドスパ': 10,
+            '耳かき 10分': 10
         };
 
         let selectedirradiationsTime = 0; // 訪問回数で選択された時間
 
         let menuTimes = {
-            '60分コース': 60,
-            '90分コース': 90,
-            '120分コース': 120
+            '60分コース': 80,
+            '90分コース': 110,
+            '120分コース': 140,
+            '150分コース': 170,
+            '新人モニターコース 90分': 110
         };
 
 
@@ -975,7 +981,6 @@
 
             // 選択されたオプションを取得
             const updatedSelectedButtons = document.querySelectorAll('.symptoms button.active');
-            const treatmentText = document.getElementById('treatment-text');
 
             if (updatedSelectedButtons.length === 0) {
                 // すべてのボタンの選択が解除された場合、メニュー時間を0にリセット
@@ -1160,7 +1165,7 @@
                 return;
             }
 
-            const url = 'https://script.google.com/macros/s/AKfycbwCxnJaxGZ46c3TnnesuZcD_zuxuVoSHoDHo5MxkRzChcK5vZDwBs4HstzkXO-KLyuDYA/exec' +
+            const url = 'https://script.google.com/macros/s/AKfycbwOACMzLLSbS53SPfXKuWISA-56R_KojLFQ5EULXSnzL0T9_OpZT3V4YMRXmfsISOK7aQ/exec' +
                 `?startTime=${startTime.toISOString()}&endTime=${endTime.toISOString()}`;
 
             try {
@@ -1192,13 +1197,20 @@
             const calendar = document.getElementById('calendar1');
             const table = calendar.querySelector('table tbody');
 
-            const times = [
-                '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
-                '12:00', '12:30', '13:00', '13:30',
-                '14:00', '14:30', '15:00', '15:30',
-                '16:00', '16:30', '17:00', '17:30',
-                '18:00'
-            ];
+const times = [
+  '10:00', '10:15', '10:30', '10:45',
+  '11:00', '11:15', '11:30', '11:45',
+  '12:00', '12:15', '12:30', '12:45',
+  '13:00', '13:15', '13:30', '13:45',
+  '14:00', '14:15', '14:30', '14:45',
+  '15:00', '15:15', '15:30', '15:45',
+  '16:00', '16:15', '16:30', '16:45',
+  '17:00', '17:15', '17:30', '17:45',
+  '18:00', '18:15', '18:30', '18:45',
+  '19:00', '19:15', '19:30', '19:45',
+  '20:00', '20:15', '20:30', '20:45',
+  '21:00'
+];
 
             if (table.rows.length === 0) {
                 for (const time of times) {
@@ -1275,11 +1287,11 @@
                     }
 
                     // 18時以降に終了する予約を不可にする (17:30は可)
-                    if (slotEnd.getHours() === 18 && slotEnd.getMinutes() > 0) {
+                    if (slotEnd.getHours() === 21 && slotEnd.getMinutes() > 0) {
                         cell.textContent = '✕';
                         cell.classList.add('unavailable');
                         continue;
-                    } else if (slotEnd.getHours() > 18) {
+                    } else if (slotEnd.getHours() > 21) {
                         cell.textContent = '✕';
                         cell.classList.add('unavailable');
                         continue;
