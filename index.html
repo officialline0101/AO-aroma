@@ -300,6 +300,7 @@
             color: #fff;
         }
 
+
         .week-button-container {
             display: flex;
             justify-content: space-between;
@@ -310,11 +311,24 @@
 
         .week-button {
             padding: 10px 20px;
-            background-color: #444444;
+            background-color: #605b55;
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            transform-origin: center center;
+        }
+
+        .week-button:hover {
+            background-color: #605b55;
+            transform: scale(1.15);
+            /* ドーン！ってくらい拡大🔥 */
+        }
+
+        .week-button:active {
+            transform: scale(0.95);
+            /* クリックした瞬間にギュッと縮む💥 */
         }
 
         .month-button-container {
@@ -327,11 +341,22 @@
 
         .month-button {
             padding: 10px 20px;
-            background-color: #444;
+            background-color: #605b55;
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+        }
+
+        .month-button:hover {
+            background-color: #605b55;
+            transform: scale(1.15);
+            /* ドーン！ってくらい拡大🔥 */
+        }
+
+        .month-button:active {
+            transform: scale(0.95);
+            /* クリックした瞬間にギュッと縮む💥 */
         }
 
         .current-month {
