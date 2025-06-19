@@ -734,7 +734,7 @@
             <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="15000">90分コース</button>
             <button type="button" onclick="selectSymptom(this, 'treatment3')" data-price="15000">120分コース</button>
             <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="15000">150分コース</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="15000">新人モニターコース 90分</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="15000">新人モニターコース(1人様1回のみ利用可能)</button>
         </div>
         <div class="highlight-background">
             <span class="highlight-text">オプション</span>
@@ -1240,6 +1240,10 @@ const times = [
 
             // 現在の日時を取得
             const now = new Date();
+
+            // ✖にする期限を設定：今日から30日後
+            const limitDate = new Date(now);
+            limitDate.setDate(now.getDate() + 30);
 
             // テーブルの内容を更新
             for (let i = 0; i < 7; i++) {
