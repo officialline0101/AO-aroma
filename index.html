@@ -15,7 +15,7 @@
             /* さらに右へ */
             top: 80%;
             /* 画面中央に固定 */
-            transform: translateY(-50%) translateX(13px);
+            transform: translateY(-50%) translateX(15px);
             /* 中央配置と右ずらし */
             background: #005da3;
             display: flex;
@@ -96,7 +96,7 @@
             background-color: #fdfdfd;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            width: 90%;
+            width: 95%;
             max-width: 500px;
             padding: 25px;
             box-sizing: border-box;
@@ -451,9 +451,9 @@
 
         #treatment-text {
             background-color: #eef9f5;
-            padding: 0px;
-            border-radius: 0px;
-            margin-top: 0px;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 1px;
         }
 
         .highlight-background {
@@ -484,33 +484,29 @@
             /* 太文字に設定 */
         }
 
-        .info-text {
-            margin-top: 20px;
-            /* 上の余白 */
-            margin-bottom: 10px;
-            /* 下に白い隙間を追加 */
-            font-size: 13px;
-            color: #000000;
-            line-height: 1.5;
-            text-align: center;
-            word-wrap: break-word;
-            background-color: #eef9f5;
-            /* 青っぽい背景色を追加 */
-            padding: 10px;
-            border-radius: 4px;
-        }
+.info-textopu {
+    display: block;
+    width: 100%; /* 横幅いっぱいに広げる */
+    margin: 0px 0 0px 0; /* 上20px・下10px・左右0 */
+    font-size: 13px;
+    color: #000000;
+    line-height: 1.5;
+    text-align: center;
+    word-wrap: break-word;
+    background-color: #eef9f5; /* 青っぽい背景色を追加 */
+    padding: 10px;
+    border-radius: 4px;
+    box-sizing: border-box; /* padding込みで100%幅 */
+}
 
-        /* 携帯端末向けのレスポンシブデザイン */
-        @media (max-width: 768px) {
-            .info-text {
-                font-size: 11.5px;
-                /* スマホでは少し小さく */
-                margin-top: 10px;
-                /* 上下のマージンを調整 */
-                line-height: 2.0;
-                /* テキストの高さ調整 */
-            }
-        }
+/* 携帯端末向けのレスポンシブデザイン */
+@media (max-width: 768px) {
+    .info-textopu {
+        font-size: 11.5px; /* スマホでは少し小さく */
+        margin: 0px 0; /* 上下のみマージン */
+        line-height: 2.0; /* テキストの高さ調整 */
+    }
+}
 
         .symptoms,
         .options {
@@ -729,6 +725,34 @@
             padding: 50px 10px;
             margin-top: 30px;
         }
+
+        .info-text {
+            margin-top: 20px;
+            /* 上の余白 */
+            margin-bottom: 10px;
+            /* 下に白い隙間を追加 */
+            font-size: 13px;
+            color: #000000;
+            line-height: 1.5;
+            text-align: center;
+            word-wrap: break-word;
+            background-color: #eef9f5;
+            /* 青っぽい背景色を追加 */
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        /* 携帯端末向けのレスポンシブデザイン */
+        @media (max-width: 768px) {
+            .info-text {
+                font-size: 11.5px;
+                /* スマホでは少し小さく */
+                margin-top: 10px;
+                /* 上下のマージンを調整 */
+                line-height: 2.0;
+                /* テキストの高さ調整 */
+            }
+        }
     </style>
 </head>
 
@@ -758,15 +782,17 @@
             <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="15000">60分コース</button>
             <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="15000">90分コース</button>
             <button type="button" onclick="selectSymptom(this, 'treatment3')" data-price="15000">120分コース</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="15000">150分コース</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="15000">新人モニターコース(1人様1回のみ利用可能)</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment4')" data-price="15000">150分コース</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment5')" data-price="15000">新人モニターコース(1人様1回のみ利用可能)</button>
         </div>
         <div class="highlight-background">
             <span class="highlight-text">オプション</span>
         </div>
         <div class="irradiations">
             <button type="button" id="firstirradiations" onclick="selectirradiations(this)" data-price="1500">耳かき 10分</button>
+            <div class="info-textopu">耳かき2000円</div>
             <button type="button" id="firstirradiations" onclick="selectirradiations(this)" data-price="1500">ヘッドスパ 10分</button>
+            <div class="info-textopu">ヘッドスパ2000円</div>
         </div>
 
         <div class="label">希望日時<span class="required">必須</span></div>
@@ -1002,6 +1028,7 @@
 
             // 選択されたオプションを取得
             const updatedSelectedButtons = document.querySelectorAll('.symptoms button.active');
+            const treatmentText = document.getElementById('treatment-text');
 
             if (updatedSelectedButtons.length === 0) {
                 // すべてのボタンの選択が解除された場合、メニュー時間を0にリセット
@@ -1028,11 +1055,15 @@
             fetchAvailability(currentDate);
 
             if (treatmentId === 'treatment1') {
-                treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：60分</strong></div>`;
+                treatmentText.innerHTML = `<div style="text-align: center;"><strong>60分13,000円</strong></div>`;
             } else if (treatmentId === 'treatment2') {
-                treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：90分</strong</div>`;
+                treatmentText.innerHTML = `<div style="text-align: center;"><strong>90分15,000円</strong</div>`;
             } else if (treatmentId === 'treatment3') {
-                treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：120分</strong></div>`;
+                treatmentText.innerHTML = `<div style="text-align: center;"><strong>120分19,000円</strong></div>`;
+            } else if (treatmentId === 'treatment4') {
+                treatmentText.innerHTML = `<div style="text-align: center;"><strong>150分23,000円</strong</div>`;
+            } else if (treatmentId === 'treatment5') {
+                treatmentText.innerHTML = `<div style="text-align: center;"><strong>新人モニターコース13,000円</strong></div>`;
             } else {
                 treatmentText.innerHTML = '';
             }
